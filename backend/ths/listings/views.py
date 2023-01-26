@@ -6,7 +6,11 @@ from .serializers import ListingSerializer, AssignmentSerializer
 
 class ListingList(generics.ListAPIView):
     serializer_class = ListingSerializer
-    queryset = Listing.objects.all()
+    queryset = (
+        Listing.objects
+        .prefetch_related("assignments")
+        .prefetch_related("pets").all()
+    )
 
 
 class AssignmentCreate(generics.CreateAPIView):

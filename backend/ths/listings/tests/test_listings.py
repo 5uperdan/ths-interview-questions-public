@@ -44,3 +44,9 @@ class ListingList(APITestCase):
                 },
             ],
         )
+
+    def test_get_listings_in_three_queries(self):
+        """When there are listings present in the database,
+        querying the endpoint should always generate 3 queries"""
+        with self.assertNumQueries(3):
+            response = self.client.get("/listings/")
